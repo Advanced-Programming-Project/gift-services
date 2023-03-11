@@ -4,7 +4,7 @@ on:
     branches:
       - action-docker-ci
 jobs:
-  check-bats-version:
+  deployment:
     runs-on: ubuntu-latest
     steps:
       - name: Deployment
