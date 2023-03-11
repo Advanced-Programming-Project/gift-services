@@ -1,0 +1,14 @@
+name: Pipelines
+on:
+  push:
+    branches:
+      - action-docker-ci
+jobs:
+  check-bats-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deployment
+        uses: digitalocean/app_action@main
+        with:
+          app_name: gift-app
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
