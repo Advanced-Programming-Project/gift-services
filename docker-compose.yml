@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  database:
+    image: "mysql:latest"
+    container_name: database
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+      MYSQL_DATABASE: gift_services
+    ports:
+      - "8081:3306"
+    # volumes:
+    #  - gift_services:/var/lib/mysql
+
+# volumes:
+#  gift_services:
