@@ -11,4 +11,4 @@ jobs:
         uses: digitalocean/app_action@main
         with:
           app_name: gift-app
-          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+          token: ${{ secrets.DIGITAL_OCEAN_TOKEN }}
