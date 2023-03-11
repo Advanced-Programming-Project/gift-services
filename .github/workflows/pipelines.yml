@@ -7,6 +7,10 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
     steps:
+      - name: test
+        run: ls
+      - name: test2
+        run: pwd
       - name: Update environment variables
         run: |
               rm src/main/resources/application.properties && touch src/main/resources/application.properties &&
