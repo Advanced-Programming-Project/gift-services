@@ -4,9 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,11 +21,27 @@ public class StudentInternship {
     @Column(name = "company_tutor_name", nullable = false)
     private String companyTutorName;
     @Column(name = "starting_date", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private LocalDate startingDate;
+    private String startingDate;
     @Column(name = "ending_date", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private LocalDate endingDate;
+    private String endingDate;
     @Column(name = "comment")
     private String comment;
+    @Column(name = "company_address", nullable = false)
+    private String companyAddress;
+    @Column(name="specifications", columnDefinition = "boolean default false")
+    private boolean specifications;
+    @Column(name="visit_form", columnDefinition = "boolean default false")
+    private boolean visitForm;
+    @Column(name="evaluation_form", columnDefinition = "boolean default false")
+    private boolean evaluationForm;
+    @Column(name="web_survey", columnDefinition = "boolean default false")
+    private boolean webSurvey;
+    @Column(name="report_sent", columnDefinition = "boolean default false")
+    private boolean reportSent;
+    @Column(name="oral_presentation", columnDefinition = "boolean default false")
+    private boolean oralPresentation;
+    @Column(name="visit_planned", columnDefinition = "boolean default false")
+    private boolean visitPlanned;
+    @Column(name="visit_done", columnDefinition = "boolean default false")
+    private boolean visitDone;
 }

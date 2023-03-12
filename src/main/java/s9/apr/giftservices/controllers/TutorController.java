@@ -1,6 +1,8 @@
 package s9.apr.giftservices.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import s9.apr.giftservices.dtos.StudentDTO;
 import s9.apr.giftservices.entities.Student;
 import s9.apr.giftservices.entities.Tutor;
@@ -8,14 +10,12 @@ import s9.apr.giftservices.mappers.StudentDTOMapper;
 import s9.apr.giftservices.services.StudentService;
 import s9.apr.giftservices.services.TutorService;
 import org.springframework.web.bind.annotation.*;
+import s9.apr.giftservices.strings.routes.Routes;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @RestController
-@CrossOrigin(origins = {"http://localhost", "http://170.64.166.225"})
-@RequestMapping("/tutors")
 public class TutorController {
     private final TutorService tutorService;
     private final StudentService studentService;
@@ -26,38 +26,55 @@ public class TutorController {
         this.studentService = studentService;
     }
 
-    @PostMapping
-    public Tutor saveTutor(@RequestBody Tutor tutor) {
-        return tutorService.save(tutor);
-    }
-    @PutMapping("/{tutorId}")
-    public Tutor updateTutor(@PathVariable long tutorId, @RequestBody Tutor tutor) {
-        return tutorService.update(tutorId, tutor);
+    @PutMapping("/tutors")
+    public Tutor updateTutor(@RequestBody Tutor tutor) {
+        Tutor t = tutorService.findByEmail(tutor.getEmail());
+        tutor.setId(t.getId());
+        return tutorService.update(tutor);
     }
 
-    @PostMapping("/students/{tutorId}")
-    public StudentDTO saveStudent(@PathVariable long tutorId, @RequestBody StudentDTO studentDTO) {
-        Tutor tutor = tutorService.findById(tutorId);
+    @PostMapping(Routes.STUDENT_BASE_URL)
+    public StudentDTO saveStudent(@RequestBody StudentDTO studentDTO) {
+        Tutor tutor = tutorService.findByEmail(getAuthenticatedTutorEmail());
         Student s = studentService.save(StudentDTOMapper.toStudent(studentDTO, tutor));
         return StudentDTOMapper.toDTO(s);
     }
-    @GetMapping("/students/{tutorId}")
-    public List<StudentDTO> findAllStudents(@PathVariable long tutorId) {
-        return studentService.findAllByTutorId(tutorId)
+    @PostMapping(Routes.STUDENT_BASE_URL + "/all")
+    public List<StudentDTO> saveAllStudents(@RequestBody List<StudentDTO> studentDTOS) {
+        Tutor tutor = tutorService.findByEmail(getAuthenticatedTutorEmail());
+        List<Student> students = studentService.saveAll(studentDTOS.stream().map(dto -> StudentDTOMapper.toStudent(dto, tutor))
+                        .collect(Collectors.toList()));
+        return studentService.saveAll(students).stream()
+                .map(StudentDTOMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+    @GetMapping(Routes.STUDENT_BASE_URL)
+    public List<StudentDTO> findAllStudents() {
+        Tutor tutor = tutorService.findByEmail(getAuthenticatedTutorEmail());
+        return studentService.findAllByTutorId(tutor.getId())
                 .stream()
                 .map(StudentDTOMapper::toDTO)
                 .collect(Collectors.toList());
     }
-    @PutMapping("/students/{tutorId}/{studentId}")
-    public StudentDTO updateStudent(@PathVariable long tutorId, @PathVariable long studentId, @RequestBody StudentDTO studentDTO) {
-        Tutor tutor = tutorService.findById(tutorId);
+    @PutMapping(Routes.STUDENT_BASE_URL + "/{studentId}")
+    public StudentDTO updateStudent(@PathVariable long studentId, @RequestBody StudentDTO studentDTO) {
+        Tutor tutor = tutorService.findByEmail(getAuthenticatedTutorEmail());
         studentDTO.setId(studentId);
         Student s = studentService.udapte(StudentDTOMapper.toStudent(studentDTO, tutor));
         return StudentDTOMapper.toDTO(s);
     }
-    @DeleteMapping("/students/{studentId}")
+    @DeleteMapping(Routes.STUDENT_BASE_URL + "/{studentId}")
     public boolean deleteStudent(@PathVariable long studentId) {
         return studentService.deleteById(studentId);
     }
 
+    private String getAuthenticatedTutorEmail() {
+        Tutor tutor = null;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            String email = authentication.getName();
+            tutor = tutorService.findByEmail(email);
+        }
+        return tutor != null ? tutor.getEmail() : null;
+    }
 }
