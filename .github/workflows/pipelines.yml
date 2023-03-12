@@ -16,7 +16,9 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
+            rm -rf gift-services
+            git clone git@github.com:Advanced-Programming-Project/gift-services.git
             cd gift-services
             git checkout action-docker-ci
-            git pull
+            cp ../config/application.properties ./src/main/resources/application.properties
             docker compose -f docker-compose.ci.yml up --build
