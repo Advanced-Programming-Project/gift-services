@@ -2,7 +2,7 @@ name: Pipelines
 on:
   push:
     branches:
-      - action-docker-ci
+      - main
 jobs:
   deployment:
     name: deploy
@@ -19,6 +19,6 @@ jobs:
             rm -rf gift-services
             git clone git@github.com:Advanced-Programming-Project/gift-services.git
             cd gift-services
-            git checkout action-docker-ci
+            git checkout main
             cp ../config/application.properties ./src/main/resources/application.properties
             docker compose -f docker-compose.ci.yml up -d --build
