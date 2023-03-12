@@ -5,23 +5,18 @@ on:
       - action-docker-ci
 jobs:
   deployment:
+    name: deploy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - name: Write value to Properties-file
-        uses: christian-draeger/write-properties@1.1.0
+      - name: execute
+        uses: appleboy/ssh-action@v0.1.8
         with:
-          path: './src/main/resources/application.properties'
-          property: |
-            'spring.datasource.url'
-            'spring.datasource.username'
-            'spring.datasource.password'
-          value: |
-            'jdbc:mysql://${{ secrets.DB_HOST }}:${{ secrets.DB_PORT }}/gift_services'
-            '${{ secrets.DB_USER }}'
-            '${{ secrets.DB_PWD }}'
-      - name: Deployment
-        uses: digitalocean/app_action@main
-        with:
-          app_name: gift-app
-          token: ${{ secrets.DIGITAL_OCEAN_TOKEN }}
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd gift-services
+            git checkout action-docker-ci
+            git pull
+            docker compose -f docker-compose.ci.yml up --build
