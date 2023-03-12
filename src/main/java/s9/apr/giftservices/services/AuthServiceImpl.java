@@ -16,8 +16,8 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String signin(Tutor tutor) {
-        return "yes";
+    public Tutor login(Tutor tutor) {
+        return tutorRepository.findByEmailAndPassword(tutor.getEmail(),tutor.getPassword()).orElseThrow();
 
     }
 }

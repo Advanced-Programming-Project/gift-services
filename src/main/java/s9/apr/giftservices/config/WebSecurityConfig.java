@@ -22,12 +22,12 @@ import s9.apr.giftservices.services.AuthService;
 public class WebSecurityConfig {
     private AuthService authService;
 
-    public WebSecurityConfig(AuthService authService){
+    public WebSecurityConfig(AuthService authService) {
         this.authService = authService;
     }
 
     @Bean
-    public static PasswordEncoder passwordEncoder(){
+    public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -42,10 +42,9 @@ public class WebSecurityConfig {
 
         http.csrf().disable()
                 .authorizeHttpRequests((authorize) ->
-                        //authorize.anyRequest().authenticated()
-                        authorize.requestMatchers(HttpMethod.GET, "/api/**").permitAll()
-                                .requestMatchers("/api/auth/**").permitAll()
-                                .anyRequest().authenticated()
+                        authorize.requestMatchers("/**").permitAll()
+                        //authorize.requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+                        //        .anyRequest().authenticated()
 
                 );
 
