@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Table(name = "student_internship")
 public class StudentInternship {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "mission", nullable = false)
