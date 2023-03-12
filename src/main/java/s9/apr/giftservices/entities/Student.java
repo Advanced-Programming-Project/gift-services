@@ -1,33 +1,37 @@
 package s9.apr.giftservices.entities;
 
-
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
-@Table(name = "Student")
-public class Student {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
-    private Long id;
+@Table(name = "student")
+public class Student extends Intern {
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "promotion", nullable = false)
+    private String promotion;
 
-    @Column(name = "firstname")
-    private String firstname;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "student_internship_id")
+    private List<StudentInternship> studentInternship;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tutor_id")
     private Tutor tutor;
+
+    public Student(long id, String firstname, String lastname, String email,
+                   String promotion, List<StudentInternship> studentInternship, Tutor tutor) {
+        super(id, firstname, lastname, email);
+        this.promotion = promotion;
+        this.studentInternship = studentInternship;
+        this.tutor = tutor;
+    }
 }
