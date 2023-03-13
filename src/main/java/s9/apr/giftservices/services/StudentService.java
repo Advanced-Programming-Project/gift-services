@@ -1,7 +1,7 @@
 package s9.apr.giftservices.services;
 
-import jakarta.persistence.EntityExistsException;
-import jakarta.persistence.EntityNotFoundException;
+
+import jakarta.persistence.*;
 import s9.apr.giftservices.entities.Student;
 import s9.apr.giftservices.entities.Tutor;
 
