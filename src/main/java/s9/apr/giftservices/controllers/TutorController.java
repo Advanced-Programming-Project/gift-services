@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost", "http://170.64.166.225"})
 @RequestMapping("/tutors")
+@CrossOrigin
 public class TutorController {
     private final TutorService tutorService;
     private final StudentService studentService;

@@ -14,7 +14,7 @@ import s9.apr.giftservices.services.AuthService;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = {"http://localhost:3000","http://localhost", "http://170.64.166.225"})
+@CrossOrigin
 public class AuthController {
     private final AuthService authService;
     @Resource(name = "authenticationManager")
