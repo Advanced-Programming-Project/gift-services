@@ -14,7 +14,7 @@ import s9.apr.giftservices.services.AuthService;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = {"http://localhost", "http://170.64.166.225"})
+@CrossOrigin(origins = {"http://localhost:3000","http://localhost", "http://170.64.166.225"})
 public class AuthController {
     private final AuthService authService;
     @Resource(name = "authenticationManager")
@@ -31,10 +31,10 @@ public class AuthController {
         try {
             authService.login(tutor);
 
-            UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(tutor.getEmail(), tutor.getPassword());
-            Authentication auth = authManager.authenticate(authReq);
-            SecurityContext sc = SecurityContextHolder.getContext();
-            sc.setAuthentication(auth);
+            //UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(tutor.getEmail(), tutor.getPassword());
+            //Authentication auth = authManager.authenticate(authReq);
+            //SecurityContext sc = SecurityContextHolder.getContext();
+            //sc.setAuthentication(auth);
 
             return ResponseEntity.status(200).body(authService.login(tutor));
         } catch (Exception e) {

@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@CrossOrigin(origins = {"http://localhost", "http://170.64.166.225"})
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost", "http://170.64.166.225"})
 @RequestMapping("/tutors")
 public class TutorController {
     private final TutorService tutorService;
@@ -30,6 +30,7 @@ public class TutorController {
     public Tutor saveTutor(@RequestBody Tutor tutor) {
         return tutorService.save(tutor);
     }
+
     @PutMapping("/{tutorId}")
     public Tutor updateTutor(@PathVariable long tutorId, @RequestBody Tutor tutor) {
         return tutorService.update(tutorId, tutor);
@@ -41,6 +42,7 @@ public class TutorController {
         Student s = studentService.save(StudentDTOMapper.toStudent(studentDTO, tutor));
         return StudentDTOMapper.toDTO(s);
     }
+
     @GetMapping("/students/{tutorId}")
     public List<StudentDTO> findAllStudents(@PathVariable long tutorId) {
         return studentService.findAllByTutorId(tutorId)
@@ -48,6 +50,7 @@ public class TutorController {
                 .map(StudentDTOMapper::toDTO)
                 .collect(Collectors.toList());
     }
+
     @PutMapping("/students/{tutorId}/{studentId}")
     public StudentDTO updateStudent(@PathVariable long tutorId, @PathVariable long studentId, @RequestBody StudentDTO studentDTO) {
         Tutor tutor = tutorService.findById(tutorId);
@@ -55,6 +58,7 @@ public class TutorController {
         Student s = studentService.udapte(StudentDTOMapper.toStudent(studentDTO, tutor));
         return StudentDTOMapper.toDTO(s);
     }
+
     @DeleteMapping("/students/{studentId}")
     public boolean deleteStudent(@PathVariable long studentId) {
         return studentService.deleteById(studentId);
