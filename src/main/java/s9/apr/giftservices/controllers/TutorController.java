@@ -1,6 +1,8 @@
 package s9.apr.giftservices.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import s9.apr.giftservices.dtos.StudentDTO;
 import s9.apr.giftservices.entities.Student;
 import s9.apr.giftservices.entities.Tutor;
@@ -26,42 +28,46 @@ public class TutorController {
         this.studentService = studentService;
     }
 
-    @PostMapping
-    public Tutor saveTutor(@RequestBody Tutor tutor) {
-        return tutorService.save(tutor);
+    @PutMapping
+    public Tutor updateTutor(@RequestBody Tutor tutor) {
+        Tutor t = tutorService.findByEmail(tutor.getEmail());
+        tutor.setId(t.getId());
+        return tutorService.update(tutor);
     }
 
-    @PutMapping("/{tutorId}")
-    public Tutor updateTutor(@PathVariable long tutorId, @RequestBody Tutor tutor) {
-        return tutorService.update(tutorId, tutor);
-    }
-
-    @PostMapping("/students/{tutorId}")
-    public StudentDTO saveStudent(@PathVariable long tutorId, @RequestBody StudentDTO studentDTO) {
-        Tutor tutor = tutorService.findById(tutorId);
+    @PostMapping("/students")
+    public StudentDTO saveStudent(@RequestBody StudentDTO studentDTO) {
+        Tutor tutor = tutorService.findByEmail(getAuthenticatedTutorEmail());
         Student s = studentService.save(StudentDTOMapper.toStudent(studentDTO, tutor));
         return StudentDTOMapper.toDTO(s);
     }
-
-    @GetMapping("/students/{tutorId}")
-    public List<StudentDTO> findAllStudents(@PathVariable long tutorId) {
-        return studentService.findAllByTutorId(tutorId)
+    @GetMapping("/students")
+    public List<StudentDTO> findAllStudents() {
+        Tutor tutor = tutorService.findByEmail(getAuthenticatedTutorEmail());
+        return studentService.findAllByTutorId(tutor.getId())
                 .stream()
                 .map(StudentDTOMapper::toDTO)
                 .collect(Collectors.toList());
     }
-
-    @PutMapping("/students/{tutorId}/{studentId}")
-    public StudentDTO updateStudent(@PathVariable long tutorId, @PathVariable long studentId, @RequestBody StudentDTO studentDTO) {
-        Tutor tutor = tutorService.findById(tutorId);
+    @PutMapping("/students/{studentId}")
+    public StudentDTO updateStudent(@PathVariable long studentId, @RequestBody StudentDTO studentDTO) {
+        Tutor tutor = tutorService.findByEmail(getAuthenticatedTutorEmail());
         studentDTO.setId(studentId);
         Student s = studentService.udapte(StudentDTOMapper.toStudent(studentDTO, tutor));
         return StudentDTOMapper.toDTO(s);
     }
-
     @DeleteMapping("/students/{studentId}")
     public boolean deleteStudent(@PathVariable long studentId) {
         return studentService.deleteById(studentId);
     }
 
+    private String getAuthenticatedTutorEmail() {
+        Tutor tutor = null;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            String email = authentication.getName();
+            tutor = tutorService.findByEmail(email);
+        }
+        return tutor != null ? tutor.getEmail() : null;
+    }
 }

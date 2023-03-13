@@ -1,11 +1,10 @@
 package s9.apr.giftservices.services;
 
-import jakarta.persistence.EntityExistsException;
-import jakarta.persistence.EntityNotFoundException;
+
+import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import s9.apr.giftservices.entities.Student;
 import org.springframework.stereotype.Service;
-import s9.apr.giftservices.entities.Tutor;
 import s9.apr.giftservices.repositories.StudentRepository;
 
 import java.util.List;
