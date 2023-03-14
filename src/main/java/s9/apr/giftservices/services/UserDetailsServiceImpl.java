@@ -10,12 +10,12 @@ import s9.apr.giftservices.entities.UserPrincipal;
 import s9.apr.giftservices.repositories.TutorRepository;
 
 @Service
-public class TutorDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private TutorRepository tutorRepository;
+    private final TutorRepository tutorRepository;
 
     @Autowired
-    public TutorDetailsServiceImpl(TutorRepository tutorRepository) {
+    public UserDetailsServiceImpl(TutorRepository tutorRepository) {
         this.tutorRepository = tutorRepository;
     }
     @Override
