@@ -28,11 +28,6 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public Student findById(long studentId) throws EntityNotFoundException{
-        return studentRepository.findById(studentId)
-                .orElseThrow(() -> new EntityNotFoundException("No student found for " + studentId));
-    }
-    @Override
 
     public Student udapte(Student student) throws EntityExistsException {
         if(!studentRepository.existsById(student.getId()))

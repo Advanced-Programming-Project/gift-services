@@ -22,5 +22,11 @@ public class Tutor extends Intern{
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "tutor_id")
-    private final List<Student> students = new ArrayList<>();
+    private List<Student> students = new ArrayList<>();
+
+    public Tutor(long id, String firstname, String lastname, String email,
+                 String password) {
+        super(id, firstname, lastname, email);
+        this.password = password;
+    }
 }

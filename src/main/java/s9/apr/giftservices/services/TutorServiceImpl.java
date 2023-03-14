@@ -32,16 +32,7 @@ public class TutorServiceImpl implements TutorService {
 
     @Override
     public Tutor findByEmail(String email) throws EntityNotFoundException {
-        Tutor t = tutorRepository.findByEmail(email);
-        if(t == null)
-            throw new EntityNotFoundException("Tutor not found");
-        return t;
-    }
-
-    @Override
-    public Tutor findById(long tutorId) throws EntityNotFoundException {
-        return tutorRepository.findById(tutorId)
-                .orElseThrow(() -> new EntityNotFoundException("Tutor " + tutorId + " not found"));
+        return tutorRepository.findByEmail(email);
     }
 
 }

@@ -8,5 +8,4 @@ public interface TutorService {
     Tutor save(Tutor tutor);
     Tutor update(Tutor tutor) throws EntityExistsException;
     Tutor findByEmail(String email) throws EntityNotFoundException;
-    Tutor findById(long tutorId) throws EntityNotFoundException;
 }
