@@ -6,7 +6,6 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import s9.apr.giftservices.strings.values.Values;
 
@@ -15,8 +14,7 @@ import java.util.Date;
 @Component
 public class JWTUtil {
 
-    @Value("${spring.security.oauth2.resourceserver.jwt.secret}")
-    private String secret;
+    private final String secret = Values.SECRET;
     public String generateToken(String email) throws IllegalArgumentException {
         Date currentDate = new Date();
         int validityDuration = 30;

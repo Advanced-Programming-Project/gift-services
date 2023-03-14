@@ -12,4 +12,6 @@ public class Values {
     public static final String USER_DETAILS = "User Details";
     public static final String EMAIL = "email";
 
+    public static final  String SECRET=":DX&}OT_fMEgF]5PjPjbae.Ne}8K";
+
 }
