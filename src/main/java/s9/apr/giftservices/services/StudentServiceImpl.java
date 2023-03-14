@@ -1,11 +1,10 @@
 package s9.apr.giftservices.services;
 
-import jakarta.persistence.EntityExistsException;
-import jakarta.persistence.EntityNotFoundException;
+
+import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import s9.apr.giftservices.entities.Student;
 import org.springframework.stereotype.Service;
-import s9.apr.giftservices.entities.Tutor;
 import s9.apr.giftservices.repositories.StudentRepository;
 
 import java.util.List;
@@ -28,11 +27,6 @@ public class StudentServiceImpl implements StudentService{
         return studentRepository.findAllByTutorId(tutorId);
     }
 
-    @Override
-    public Student findById(long studentId) throws EntityNotFoundException{
-        return studentRepository.findById(studentId)
-                .orElseThrow(() -> new EntityNotFoundException("No student found for " + studentId));
-    }
     @Override
 
     public Student udapte(Student student) throws EntityExistsException {
