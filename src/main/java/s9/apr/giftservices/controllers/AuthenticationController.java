@@ -6,6 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,7 @@ import s9.apr.giftservices.services.TutorService;
 import s9.apr.giftservices.strings.routes.Routes;
 
 @RestController
+@CrossOrigin
 public class AuthenticationController {
     private final AuthenticationManager authenticationManager;
     private final JWTUtil jwtUtil;
