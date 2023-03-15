@@ -21,12 +21,10 @@ import java.io.IOException;
 @Getter
 @Setter
 public class JWTFilter extends OncePerRequestFilter {
-
     private final UserDetailsService userDetailsService;
     private final JWTUtil jwtUtil;
     @Autowired
     public JWTFilter(UserDetailsService userDetailsService, JWTUtil jwtUtil) {
-
         this.userDetailsService = userDetailsService;
         this.jwtUtil = jwtUtil;
     }

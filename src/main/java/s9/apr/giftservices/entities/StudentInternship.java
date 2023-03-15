@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,7 +11,7 @@ import java.time.LocalDate;
 @Table(name = "student_internship")
 public class StudentInternship {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "mission", nullable = false)
@@ -23,11 +21,11 @@ public class StudentInternship {
     @Column(name = "company_tutor_name", nullable = false)
     private String companyTutorName;
     @Column(name = "starting_date", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private LocalDate startingDate;
+    private String startingDate;
     @Column(name = "ending_date", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private LocalDate endingDate;
+    private String endingDate;
     @Column(name = "comment")
     private String comment;
+    @Column(name = "company_address", nullable = false)
+    private String companyAddress;
 }

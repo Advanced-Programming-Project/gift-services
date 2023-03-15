@@ -13,7 +13,6 @@ import java.util.Date;
 
 @Component
 public class JWTUtil {
-
     private final String secret = Values.SECRET;
     public String generateToken(String email) throws IllegalArgumentException {
         Date currentDate = new Date();
