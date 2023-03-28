@@ -9,7 +9,7 @@ import s9.apr.giftservices.repositories.StudentRepository;
 
 import java.util.List;
 @Service
-public class StudentServiceImpl implements StudentService{
+public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
 
     @Autowired
@@ -34,6 +34,14 @@ public class StudentServiceImpl implements StudentService{
             throw new EntityExistsException("Student " + student.getId() + " doesn't exist");
         return studentRepository.save(student);
     }
+
+    @Override
+    public Student findById(long studentId) throws EntityNotFoundException {
+        return studentRepository
+                .findById(studentId)
+                .orElseThrow(() -> new EntityNotFoundException("Student " + studentId + " not found"));
+    }
+
     @Override
     public boolean deleteById(long studentId) {
         if(!studentRepository.existsById(studentId))

@@ -9,6 +9,7 @@ public interface StudentService {
     Student save(Student student);
     List<Student> findAllByTutorId(long tutorId);
     Student udapte(Student student) throws EntityExistsException;
+    Student findById(long studentId) throws EntityNotFoundException;
     boolean deleteById(long studentId);
     List<Student> saveAll(List<Student> students);
 }

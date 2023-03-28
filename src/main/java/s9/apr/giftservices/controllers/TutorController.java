@@ -56,6 +56,10 @@ public class TutorController {
                 .map(StudentDTOMapper::toDTO)
                 .collect(Collectors.toList());
     }
+    @GetMapping(Routes.STUDENT_BASE_URL + "/{studentId}")
+    public StudentDTO getStudent(@PathVariable long studentId) {
+        return StudentDTOMapper.toDTO(studentService.findById(studentId));
+    }
     @PutMapping(Routes.STUDENT_BASE_URL + "/{studentId}")
     public StudentDTO updateStudent(@PathVariable long studentId, @RequestBody StudentDTO studentDTO) {
         Tutor tutor = tutorService.findByEmail(getAuthenticatedTutorEmail());
