@@ -28,4 +28,20 @@ public class StudentInternship {
     private String comment;
     @Column(name = "company_address", nullable = false)
     private String companyAddress;
+    @Column(name="specifications", columnDefinition = "boolean default false")
+    private boolean specifications;
+    @Column(name="visit_form", columnDefinition = "boolean default false")
+    private boolean visitForm;
+    @Column(name="evaluation_form", columnDefinition = "boolean default false")
+    private boolean evaluationForm;
+    @Column(name="web_survey", columnDefinition = "boolean default false")
+    private boolean webSurvey;
+    @Column(name="report_sent", columnDefinition = "boolean default false")
+    private boolean reportSent;
+    @Column(name="oral_presentation", columnDefinition = "boolean default false")
+    private boolean oralPresentation;
+    @Column(name="visit_planned", columnDefinition = "boolean default false")
+    private boolean visitPlanned;
+    @Column(name="visit_done", columnDefinition = "boolean default false")
+    private boolean visitDone;
 }
